@@ -20,7 +20,7 @@ The workflow is organised into patient and control Snakemake-based pipelines and
 - SEEG-derived EI data 
 - MRtrix3 tractography files (.tck)
 
-## Singilarity containers required
+## Singularity containers required
 - fMRIPrep
 - FreeSurfer
 - MRtrix3
