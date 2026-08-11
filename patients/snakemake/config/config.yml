@@ -9,7 +9,7 @@ freesurfer_dir: "/patients/freesurfer"
 diffusion_dir: "/DATA_CNS/PROJECTS/EPILEPSY/7T/deriv/dwi"
 connectome_dir: "/patients/connectomes"
 ei_dir: "/DATA_CNS/PROJECTS/EPILEPSY/USERS/JACOB/patients/ei"
-results_dir: "results"
+results_dir: "/results"
 
 # Resources
 resources: "/resources" 
