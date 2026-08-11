@@ -1,0 +1,34 @@
+# Participants
+participants: "/resources/participants.xlsx"
+
+# Set paths
+patient_dir: "/patients"
+control_dir: "/controls"
+fmriprep_dir: "patients/fmriprep"
+freesurfer_dir: "patients/freesurfer"
+diffusion_dir: "/DATA_CNS/PROJECTS/EPILEPSY/7T/deriv/dwi"
+connectome_dir: "patients/connectomes"
+ei_dir: "/DATA_CNS/PROJECTS/EPILEPSY/USERS/JACOB/patients/ei"
+results_dir: "results"
+
+# Resources
+resources: "resources" 
+snakemake: "patients/snakemake"
+minimized_config: "resources/config-1-minimized.yaml"
+fs_license: "resources/license.txt"
+vep_lut: "resources/VepFreeSurferColorLut.txt"
+vep_lut_mrtrix: "resources/VepFreeSurferColorLut_MRtrix3.txt"
+
+# Containers
+fs_container: "/DATA_CNS/PROJECTS/EPILEPSY/USERS/JACOB/containers/freesurfer_8.1.0.sif"
+fmriprep_container: "/DATA_CNS/PROJECTS/EPILEPSY/USERS/JACOB/containers/nipreps_fmriprep_v25.1.2.sif"
+
+# Conda 
+conda_prefix: "/home/jknight/miniconda3"
+
+# Null model parameters 
+null_model:
+  distance_threshold_mm: 20
+  correlation_threshold_r: 0.1
+  null_iterations: 1000
+  safety_limit: 100000000

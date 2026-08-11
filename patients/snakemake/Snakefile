@@ -1,0 +1,71 @@
+# Snakefile (patients) for structural connectome and time series preprocessing, analysis (pyspi, HOI)
+# Usage: comment in/out processes as needed to execute pipeline components
+
+import os
+import pandas as pd
+
+configfile: "config/config.yml"
+
+wildcard_constraints:
+    subject = r"sub-\d{3}",
+    run = r"01|02", 
+    dir = r"RL|LR|AP|PA",
+    network = r"ez|pz|ez\+pz"
+
+# load patient list 
+subjects = pd.read_excel(config["participants"], sheet_name="patients")
+subjects = subjects["bids"]
+
+# load control list 
+control_subjects = pd.read_excel(config["participants"], sheet_name="controls")["bids"].tolist()
+
+# specify rule files
+include: "rules/preprocess_timeseries.smk"
+include: "rules/connectome.smk"
+include: "rules/pyspi.smk"
+include: "rules/hoi.smk"
+
+# handle acquisition parameters 
+def get_valid_inputs(pattern):
+    """Find existing files that match the pattern"""
+    valid_files = []
+    for subject in subjects:
+        for run in ["01", "02"]:
+            for dir in ["AP", "PA", "LR", "RL"]:
+                # Check if the fMRIprep output exists
+                bold_file = f"{config['fmriprep_dir']}/{subject}/func/{subject}_task-rest_dir-{dir}_run-{run}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"
+                confounds_file = f"{config['fmriprep_dir']}/{subject}/func/{subject}_task-rest_dir-{dir}_run-{run}_desc-confounds_timeseries.tsv"
+                
+                if os.path.exists(bold_file) and os.path.exists(confounds_file):
+                    valid_files.append(pattern.format(subject=subject, run=run, dir=dir))
+    return valid_files
+
+rule all: # preprocess_timeseries.smk
+    input: 
+        expand("logs/{subject}/{subject}_vep_atlas_conversion.done", subject=subjects), 
+        get_valid_inputs("logs/{subject}/{subject}_task-rest_dir-{dir}_run-{run}_vep_atlas_resample.done"),
+        get_valid_inputs("logs/{subject}/{subject}_task-rest_dir-{dir}_run-{run}_atlas_alignment_bold.done"),
+        get_valid_inputs("logs/{subject}/{subject}_task-rest_dir-{dir}_run-{run}_preproc_bold_vep_timeseries.done"),
+        get_valid_inputs("logs/{subject}/{subject}_task-rest_dir-{dir}_run-{run}_label_vep_timeseries.done")
+
+# ============== OUT OF PIPE: run bash resources/rename_files.sh =========================================================================================================================
+
+rule all: # connectome.smk 
+    input:
+        expand("logs/{subject}/{subject}_vep_atlas_conversion.done", subject=subjects),
+        expand("logs/{subject}/{subject}_transform_atlas.done", subject=subjects), 
+        expand("logs/{subject}/{subject}_check_atlas_alignment_diff.done", subject=subjects),
+        expand("logs/{subject}/{subject}_compute_connectome_N.done", subject=subjects),
+        expand("logs/{subject}/{subject}_compute_connectome_L.done", subject=subjects)
+
+rule all: # pyspi.smk
+    input:
+        expand("logs/{subject}/{subject}_run-{run}_compute_spis.done", subject=subjects, run=["01", "02"])
+        
+rule all: # hoi.smk 
+    input:        
+        expand("logs/{subject}/{subject}_run-{run}_{network}_hoi.done", subject=subjects, run=["01", "02"], network=["ez","pz", "ez+pz"]),
+        expand("logs/{subject}/{subject}_run-{run}_{network}_within_subject_zscore.done", subject=subjects, run=["01", "02"], network=["ez", "pz", "ez+pz"]),
+        expand("logs/{subject}/{subject}_run-{run}_{network}_between_subject_zscore.done", subject=subjects, run=["01", "02"], network=["ez", "pz", "ez+pz"]), 
+        expand("logs/{subject}/{subject}_run-{run}_comparative_analysis_complete.done", subject=subjects, run=["01", "02"]), 
+        expand("logs/{subject}/{control}_run-{run}_{network}_within_subject_zscore.done", subject=subjects, network=["ez", "pz", "ez+pz"], run=["01", "02"], control=control_subjects)
