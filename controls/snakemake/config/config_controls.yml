@@ -8,7 +8,7 @@ freesurfer_dir: "/controls/freesurfer"
 diffusion_dir_non_hbp: "/DATA_CNS/PROJECTS/EPILEPSY/CONTROLS_7T/deriv/dwi"
 diffusion_dir_hbp: "/DATA_CNS/PROJECTS/EPILEPSY/hbp/Database_controls/deriv/dwi"
 connectome_dir: "/controls/connectomes"
-results_dir: "results"
+results_dir: "/results"
 
 # Resources
 resources: "/resources"
