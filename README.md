@@ -8,7 +8,7 @@ The workflow is organised into patient and control Snakemake-based pipelines and
 - Conversion and resampling of VEP atlas 
 - Atlas-to-BOLD alignment checks and quality control
 - Extraction of VEP-derived BOLD time series
-- Labeling of time series using epileptogenciity index (EI) outputs from SEEG
+- Labelling of time series using epileptogenciity index (EI) outputs from SEEG
 - Structural connectome generation from diffusion tractography
 - Mass computation of pairwise interaction statistics using pyspi (https://github.com/DynamicsAndNeuralSystems/pyspi)
 - Multivariate information theoretic analysis using HOI (https://github.com/brainets/hoi)
