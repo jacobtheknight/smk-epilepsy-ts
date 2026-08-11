@@ -3,20 +3,20 @@ participants: "/participants.xlsx"
 
 # Set paths
 control_dir: "/controls"
-fmriprep_dir: "controls/fmriprep"
-freesurfer_dir: "controls/freesurfer"
+fmriprep_dir: "/controls/fmriprep"
+freesurfer_dir: "/controls/freesurfer"
 diffusion_dir_non_hbp: "/DATA_CNS/PROJECTS/EPILEPSY/CONTROLS_7T/deriv/dwi"
 diffusion_dir_hbp: "/DATA_CNS/PROJECTS/EPILEPSY/hbp/Database_controls/deriv/dwi"
-connectome_dir: "controls/connectomes"
+connectome_dir: "/controls/connectomes"
 results_dir: "results"
 
 # Resources
-resources: "resources" 
-snakemake: "controls/snakemake"
-minimized_config: "resources/config-1-minimized.yaml"
-fs_license: "resources/license.txt"
-vep_lut: "resources/VepFreeSurferColorLut.txt"
-vep_lut_mrtrix: "resources/VepFreeSurferColorLut_MRtrix3.txt"
+resources: "/resources"
+snakemake: "/controls/snakemake"
+minimized_config: "/resources/config-1-minimized.yaml"
+fs_license: "/resources/license.txt"
+vep_lut: "/resources/VepFreeSurferColorLut.txt"
+vep_lut_mrtrix: "/resources/VepFreeSurferColorLut_MRtrix3.txt"
 
 # Containers
 fs_container: "/DATA_CNS/PROJECTS/EPILEPSY/USERS/JACOB/containers/freesurfer_8.1.0.sif"
