@@ -1,6 +1,8 @@
 # Snakemake workflow: smk-epilepsy-ts
 SEEG-informed workflow for processing patient resting-state fMRI data using the Virtual Epileptic Patient (VEP) atlas, with downstream structural connectome parcellations and (beyond) pairwise comparative analyses. 
 
+<img width="740" height="561" alt="Figure 1" src="https://github.com/user-attachments/assets/51a7ddf2-edd2-40bf-841f-e85374ca5a14" />
+
 ## Overview
 The workflow is organised into patient and control Snakemake-based pipelines and includes:  
 - Conversion and resampling of VEP atlas 
