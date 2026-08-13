@@ -23,6 +23,8 @@ The workflow is organised into patient and control Snakemake-based pipelines and
 ## Singularity containers required
 - fMRIPrep
 - FreeSurfer
+
+## Installations 
 - MRtrix3
 - FSL
 
